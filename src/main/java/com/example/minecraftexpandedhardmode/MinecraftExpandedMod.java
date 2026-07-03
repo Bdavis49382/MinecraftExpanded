@@ -14,7 +14,6 @@ import com.example.minecraftexpandedhardmode.death.DeathManager;
 import com.example.minecraftexpandedhardmode.storage.StorageManager;
 import com.example.minecraftexpandedhardmode.smelting.SmeltingManager;
 import com.example.minecraftexpandedhardmode.furnace.FurnaceManager;
-import com.example.minecraftexpandedhardmode.MiningConfig;
 
 public class MinecraftExpandedMod implements ModInitializer {
     public static final String MOD_ID = "minecraftexpanded";

@@ -55,11 +55,6 @@ public abstract class PlayerEntityMixin {
         cir.setReturnValue(newSpeed);
     }
 
-    private static float getTierDowngradeRatio(ToolMaterial material) {
-        return MiningConfig.getTierDowngradeRatio(material);
-    }
-
-
 
     /**
      * Simple check: if it's a ToolItem, verify it's appropriate for this block.

@@ -5,7 +5,6 @@ import net.minecraft.item.ToolMaterial;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashMap;
