@@ -6,6 +6,8 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import net.minecraft.block.BlockState;
+import com.example.minecraftexpandedhardmode.MinecraftExpandedMod;
+import com.example.minecraftexpandedhardmode.MiningConfig;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.AxeItem;
 import net.minecraft.item.HoeItem;
@@ -13,6 +15,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.PickaxeItem;
 import net.minecraft.item.ShovelItem;
 import net.minecraft.item.ToolItem;
+import net.minecraft.item.ToolMaterial;
 import net.minecraft.registry.tag.BlockTags;
 
 @Mixin(PlayerEntity.class)
@@ -20,7 +23,7 @@ public abstract class PlayerEntityMixin {
     
     /**
      * Mixin into getBlockBreakingSpeed to apply mining penalties.
-     * Hand mining and wrong tools get significant speed reduction.
+     * Correct tools mine with the speed of the next lower tier.
      */
     @Inject(
         method = "getBlockBreakingSpeed",
@@ -32,21 +35,32 @@ public abstract class PlayerEntityMixin {
         PlayerEntity player = (PlayerEntity) (Object) this;
         ItemStack mainHand = player.getMainHandStack();
         
-        // If not holding an item (hand mining), apply heavy penalty
         if (mainHand.isEmpty()) {
-            cir.setReturnValue(original * 0.1f); // 90% slowdown
+            cir.setReturnValue(original * 0.1f);
             return;
         }
-        
-        // Check if tool is appropriate for the block
-        if (!isToolEffectiveForBlock(mainHand, state)) {
-            cir.setReturnValue(original * 0.2f); // 80% slowdown for wrong tool
+
+        if (!(mainHand.getItem() instanceof ToolItem toolItem) || !isToolEffectiveForBlock(mainHand, state)) {
+            float newSpeed = original * 0.2f;
+            MinecraftExpandedMod.LOGGER.info("Mining speed adjusted: original={} new={} tool={}", original, newSpeed, mainHand.getItem().getTranslationKey());
+            cir.setReturnValue(newSpeed);
             return;
         }
-        
-        // Correct tool or generic item: use vanilla speed (no modification)
+
+        ToolMaterial material = toolItem.getMaterial();
+        float tierRatio = MiningConfig.getTierDowngradeRatio(material);
+        float newSpeed = original * tierRatio;
+        MinecraftExpandedMod.LOGGER.info("Mining speed adjusted: original={} new={} tool={} material={} ratio={}",
+                original, newSpeed, mainHand.getItem().getTranslationKey(), material.getClass().getName(), tierRatio);
+        cir.setReturnValue(newSpeed);
     }
-    
+
+    private static float getTierDowngradeRatio(ToolMaterial material) {
+        return MiningConfig.getTierDowngradeRatio(material);
+    }
+
+
+
     /**
      * Simple check: if it's a ToolItem, verify it's appropriate for this block.
      * More sophisticated logic can be added later (e.g., check tag-based tool types).
@@ -55,14 +69,12 @@ public abstract class PlayerEntityMixin {
         if (tool.getItem() instanceof ToolItem toolItem) {
             boolean correctToolType =
                 (state.isIn(BlockTags.PICKAXE_MINEABLE) && toolItem instanceof PickaxeItem) ||
-                (state.isIn(BlockTags.AXE_MINEABLE) && tool.getItem() instanceof AxeItem) ||
-                (state.isIn(BlockTags.SHOVEL_MINEABLE) && tool.getItem() instanceof ShovelItem) ||
-                (state.isIn(BlockTags.HOE_MINEABLE) && tool.getItem() instanceof HoeItem);
+                (state.isIn(BlockTags.AXE_MINEABLE) && toolItem instanceof AxeItem) ||
+                (state.isIn(BlockTags.SHOVEL_MINEABLE) && toolItem instanceof ShovelItem) ||
+                (state.isIn(BlockTags.HOE_MINEABLE) && toolItem instanceof HoeItem);
 
-            // Check if the tool's effective blocks include this block state
             return correctToolType;
         }
-        // Non-tool items are considered "wrong tool"
         return false;
     }
 }
