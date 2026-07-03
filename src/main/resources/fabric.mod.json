@@ -5,13 +5,12 @@
   "name": "Minecraft Expanded Hard Mode",
   "description": "Adds a hard mode experience to Minecraft.",
   "entrypoints": {
-    "main": [
-      "com.example.minecraftexpandedhardmode.MinecraftExpandedHardModeMod"
-    ]
+    "main": ["com.example.minecraftexpandedhardmode.MinecraftExpandedMod"]
   },
+  "mixins": ["mixins.minecraftexpanded.json"],
   "depends": {
-    "fabricloader": ">=0.19.0",
-    "minecraft": "1.20.4",
+    "fabricloader": ">=0.15.6",
+    "minecraft": "1.20.1",
     "fabric": "*"
   }
 }

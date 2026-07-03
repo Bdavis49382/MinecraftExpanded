@@ -1,2 +1,15 @@
 /.gradle
 /.vscode
+
+# Gradle wrapper artifacts (jar and properties are committed, ignore downloaded distributions)
+/gradle/wrapper/dists/
+
+# Build outputs and temporary artifacts
+/build/
+/bin/
+/build-output.txt
+*.hprof
+
+# Generated run directories from Loom
+/run/
+/run-server/
