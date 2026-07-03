@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "id": "minecraftexpandedhardmode",
+  "version": "1.0.0",
+  "name": "Minecraft Expanded Hard Mode",
+  "description": "Adds a hard mode experience to Minecraft.",
+  "entrypoints": {
+    "main": [
+      "com.example.minecraftexpandedhardmode.MinecraftExpandedHardModeMod"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=0.19.0",
+    "minecraft": "1.20.4",
+    "fabric": "*"
+  }
+}

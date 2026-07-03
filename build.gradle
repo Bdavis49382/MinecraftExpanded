@@ -1,0 +1,57 @@
+plugins {
+    id 'fabric-loom' version '1.3.5'
+    id 'java'
+}
+
+group = 'com.example'
+version = '1.0.0'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        name = 'Fabric'
+        url = 'https://maven.fabricmc.net/'
+    }
+}
+
+dependencies {
+    minecraft 'com.mojang:minecraft:1.20.4'
+    mappings 'net.fabricmc:yarn:1.20.4+build.8:v2'
+    modImplementation 'net.fabricmc:fabric-loader:0.19.5'
+    modImplementation 'net.fabricmc.fabric-api:fabric-api:0.88.2+1.20.4'
+}
+
+loom {
+    runs {
+        client {
+            workingDirectory project.file('run')
+            property 'fabric.log.disableConfig', 'true'
+            mods {
+                minecraftexpandedhardmode {
+                    source sourceSets.main
+                }
+            }
+        }
+        server {
+            workingDirectory project.file('run-server')
+            property 'fabric.log.disableConfig', 'true'
+            mods {
+                minecraftexpandedhardmode {
+                    source sourceSets.main
+                }
+            }
+        }
+    }
+}
+
+tasks.register("runFabricClient") {
+    group = "fabric"
+    description = "Launch the Fabric client using Loom's runClient task."
+    dependsOn("runClient")
+}
