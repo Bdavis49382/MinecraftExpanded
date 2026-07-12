@@ -3,7 +3,17 @@
   "minVersion": "0.8",
   "package": "com.example.minecraftexpandedhardmode.mixin",
   "compatibilityLevel": "JAVA_17",
-  "mixins": ["PlayerEntityMixin", "EatingDurationMixin","ConstantFoodDrainMixin", "FoodTierMixin","ForcedEdibleMixin","DisableNaturalRegenMixin","SleepHealingMixin"],
+  "mixins": [
+    "PlayerEntityMixin",
+    "EatingDurationMixin",
+    "ConstantFoodDrainMixin",
+    "FoodTierMixin",
+    "ForcedEdibleMixin",
+    "DisableNaturalRegenMixin",
+    "SleepHealingMixin",
+    "CropGrowthMixin",
+    "SaplingGrowthMixin"
+  ],
   "client": [],
   "server": []
 }
