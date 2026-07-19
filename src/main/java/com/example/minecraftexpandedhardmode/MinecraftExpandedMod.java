@@ -10,6 +10,8 @@ import com.example.minecraftexpandedhardmode.farming.FarmingManager;
 import com.example.minecraftexpandedhardmode.animals.AnimalManager;
 import com.example.minecraftexpandedhardmode.transport.TransportManager;
 import com.example.minecraftexpandedhardmode.mobs.MobManager;
+import com.example.minecraftexpandedhardmode.registry.ModItemGroups;
+import com.example.minecraftexpandedhardmode.registry.ModItems;
 import com.example.minecraftexpandedhardmode.death.DeathManager;
 import com.example.minecraftexpandedhardmode.storage.StorageManager;
 import com.example.minecraftexpandedhardmode.smelting.SmeltingManager;
@@ -35,6 +37,8 @@ public class MinecraftExpandedMod implements ModInitializer {
         StorageManager.init();
         SmeltingManager.init();
         FurnaceManager.init();
+        ModItems.init();
+        ModItemGroups.init();
         
         LOGGER.info("All modules loaded successfully!");
     }

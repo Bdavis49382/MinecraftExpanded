@@ -12,7 +12,8 @@
     "DisableNaturalRegenMixin",
     "SleepHealingMixin",
     "CropGrowthMixin",
-    "SaplingGrowthMixin"
+    "SaplingGrowthMixin",
+    "DisableVanillaSeedBehaviorMixin"
   ],
   "client": [],
   "server": []
