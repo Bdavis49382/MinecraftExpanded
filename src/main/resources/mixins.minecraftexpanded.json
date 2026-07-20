@@ -13,7 +13,8 @@
     "SleepHealingMixin",
     "CropGrowthMixin",
     "SaplingGrowthMixin",
-    "DisableVanillaSeedBehaviorMixin"
+    "DisableVanillaSeedBehaviorMixin",
+    "PlayerMovementMixin"
   ],
   "client": [],
   "server": []

@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 
 import com.example.minecraftexpandedhardmode.mining.MiningManager;
 import com.example.minecraftexpandedhardmode.hunger.HungerManager;
+import com.example.minecraftexpandedhardmode.loot.CropDropsHandler;
 import com.example.minecraftexpandedhardmode.farming.FarmingManager;
 import com.example.minecraftexpandedhardmode.animals.AnimalManager;
 import com.example.minecraftexpandedhardmode.transport.TransportManager;
@@ -39,6 +40,7 @@ public class MinecraftExpandedMod implements ModInitializer {
         FurnaceManager.init();
         ModItems.init();
         ModItemGroups.init();
+        CropDropsHandler.init();
         
         LOGGER.info("All modules loaded successfully!");
     }
